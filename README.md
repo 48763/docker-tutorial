@@ -39,17 +39,17 @@
     - [登入/出](registry/login&out.md#登入出)（ [login](registry/login&out.md#login)/ [logout](registry/login&out.md#logout)）
 - [鏡像](image/#鏡像)
     - [儲存倉上搜索、拉取、標籤與推送](image/pull&push.md#儲存倉上搜索拉取標籤與推送)（ 
-    [search](image/pull&push.md#search)/
-    [pull](image/pull&push.md#pull)/
-    [tag](image/pull&push.md#tag)/
-    [push](image/pull&push.md#push)）
+        [search](image/pull&push.md#search)/
+        [pull](image/pull&push.md#pull)/
+        [tag](image/pull&push.md#tag)/
+        [push](image/pull&push.md#push)）
     - [本地查詢](image/list.md#本地查詢)（[images](image/list.md#images)）
     - [建構與移除](image/build&remove.md#建構與移除)（ 
-    [build](image/build&remove.md#build)/ 
-    [rmi](image/build&remove.md#rmi)）
+        [build](image/build&remove.md#build)/ 
+        [rmi](image/build&remove.md#rmi)）
     - [儲存與載入](image/save&load.md#儲存與載入)（ 
-    [save](image/save&load.md#save)/ 
-    [load](image/save&load.md#load)）
+        [save](image/save&load.md#save)/ 
+        [load](image/save&load.md#load)）
     - [鏡像管理](image/manage-image.md#鏡像管理)（[image](image/manage-image.md#image)）
 - [Dockerfile](dockerfile/#dockerfile)
     - [指令集](dockerfile/instructions.md#dockerfile-指令集)
@@ -77,7 +77,7 @@
 
 - 容器
     - stack
-- [倉庫](registry#倉庫)
+- [儲存倉](registry#儲存倉)
     - distribution
     - docket
     - [Harbor](registry/harbor#-harbor)
