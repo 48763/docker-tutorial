@@ -7,7 +7,7 @@
 
 ## Docker 與 VM 架構比較
 
-Docker 所使用的虛擬化技術與 VM（[Virtual Machine](https://zh.wikipedia.org/wiki/虛擬機器)）不同，從下面架構比較圖，可以發現 docker 上所運行的應用，不需要安裝一個完整的作業系統。
+Docker 所使用的虛擬化技術與 VM（[Virtual Machine](https://zh.wikipedia.org/wiki/虛擬機器)）不同，從下圖中能清楚對比兩種架構，可以發現 docker 上所運行的應用，不需要再安裝一個完整的作業系統。
 
 ![](../img/introduction/img-01.png)[[1]](#參考)
 
