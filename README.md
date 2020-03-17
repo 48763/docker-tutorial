@@ -36,7 +36,9 @@
     - [Unix-like](installation/#unix-like)
     - [MacOSX](installation/#macosx)
 - [儲存倉](registry/#儲存倉)
-    - [登入/出](registry/login&out.md#登入出)（ [login](registry/login&out.md#login)/ [logout](registry/login&out.md#logout)）
+    - [登入/出](registry/login&out.md#登入出)（
+        [login](registry/login&out.md#login)/
+        [logout](registry/login&out.md#logout)）
 - [鏡像](image/#鏡像)
     - [儲存倉上搜索、拉取、標籤與推送](image/pull&push.md#儲存倉上搜索拉取標籤與推送)（ 
         [search](image/pull&push.md#search)/
