@@ -96,5 +96,5 @@
     - Swarm 
         - node
         - service
-    - Kubernetes
-- Daemon 配置
+    - [Kubernetes](https://github.com/48763/devops-note/tree/master/virtualization/kubernetes)
+- Daemon 

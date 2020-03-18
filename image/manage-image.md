@@ -14,17 +14,17 @@ Manage images
 
 | 名稱 | 描述 |
 | - | - |
-| [build  ](build&remove.md#build) | Build an image from a Dockerfile |
-| *[history]() | Show the history of an image |
-| *[inspect]() | Display detailed information on one or more images |
-| [load   ](save&load.md#load) | Load an image from a tar archive or STDIN |
-| [ls     ](list.md#images) | List images |
-| [prune  ](#prune) | Remove unused images |
-| [pull   ](pull&push.md#pull) | Pull an image or a repository from a registry |
-| [push   ](pull&push.md#push) | Push an image or a repository to a registry |
-| [rm     ](build&remove.md#rmi) | Remove one or more images |
-| [save   ](save&load.md#save) | Save one or more images to a tar archive (streamed to STDOUT by default) |
-| [tag    ](pull&push.md#tag) | Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE |
+| [build  ](build&remove.md#build) | 從 Dockerfile 建置鏡像 |
+| *[history]() | 顯示鏡像的歷史紀錄 |
+| *[inspect]() | 顯示一個或多個鏡像的詳細資訊 |
+| [load   ](save&load.md#load) | 從壓縮檔或標準輸入載入鏡像 |
+| [ls     ](list.md#images) | 列出鏡像 |
+| [prune  ](#prune) | 移除未使用的鏡像 |
+| [pull   ](pull&push.md#pull) | 推送鏡像倉庫到儲存倉 |
+| [push   ](pull&push.md#push) | 從儲存倉拉取鏡像倉庫 |
+| [rm     ](build&remove.md#rmi) | 移除一個或多個鏡像 |
+| [save   ](save&load.md#save) | 儲存一個或多個鏡像到壓縮檔（預設使用標準輸出串流） |
+| [tag    ](pull&push.md#tag) | 替鏡像創建鏡像倉庫的標籤名稱 |
 
 ### prune
 
@@ -40,9 +40,9 @@ Remove unused images
 
 | 名稱 | 描述 |
 | - | - |
-| [-a, --all          ]() | Remove all unused images, not just dangling ones |
-| [    --filter filter]() | Provide filter values (e.g. `'until=<timestamp>'`) |
-| [-f, --force        ]() | Do not prompt for confirmation |
+| [-a, --all          ]() | 移除所有未使用的鏡像，而不僅是懸虛鏡像 |
+| [    --filter filter]() | 提供過濾的值 (e.g. `'until=<timestamp>'`) |
+| [-f, --force        ]() | 不提示確認 |
 
 在不添加選項時，只會刪除未使用的懸掛鏡像：
 
