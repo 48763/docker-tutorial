@@ -357,10 +357,10 @@ HEALTHCHECK [OPTIONS] CMD command
 
 | 名稱 | 預設 | 描述 |
 | - | - | - |
-| --interval=DURATION | 30s | 測試間隔 |
-| --timeout=DURATION | 30s | 多久失效 |
-| --start-period=DURATION | 0s | 啟用時間 |
-| --retries=N | 3t | 嘗試次數 |
+| --interval=DURATION | 30s | 運行檢查的間隔 |
+| --timeout=DURATION | 30s | 檢查運行的最大時限 |
+| --start-period=DURATION | 0s | 初始化的開始時間 |
+| --retries=N | 3t | 嘗試幾次失敗後，回報不健康 |
 
 ### [範例](example/healthcheck.dockerfile)
 
