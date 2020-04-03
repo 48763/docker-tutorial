@@ -44,51 +44,77 @@ $ cat vsftpd-id && echo
 11a42ada866861b4afa84744f2dd85eded119c9f0f32f63ad661cf68f5de1302
 ```
 
+#### -p, --publish list 
+
+```
+$ docker create \
+    -p 20:20 \
+    -p 21:21 \
+    48763/vsftpd
+```
+
+#### --network string 
+
+```
+$ docker create \
+    --network bridge \
+    48763/vsftpd
+```
+
+```
+$ docker network ls
+```
+
 #### -e, --env list 
 
 ```
-$ docker run \
+$ docker create \
     -p 20:20 \
     -p 21:21 \
     -e PASV_ENABLE=YES \
-    -d 48763/vsftpd
+    48763/vsftpd
 ```
 
 #### --env-file list 
 
 ```
-$ docker run \
+$ docker create \
     -p 20:20 \
     -p 21:21 \
     -p 60000-61000:60000-61000 \
     --env-file vsftpd.env \
-    -d 48763/vsftpd
-```
-
-#### -i, --interactive 
-
-```
-$ sudo docker run -i 48763/vsftpd /bin/sh
+    48763/vsftpd
 ```
 
 #### --mount mount 
 
 ```
-docker run --name vsftpd \
+$ docker create \
+    -p 20:20 \
+    -p 21:21 \
+    -v $(pwd)/vsftpd:/etc/vsftpd \
+    s48763/vsftpd
+```
+
+#### -v, --volume list 
+
+```
+$ docker create \
+    -p 20:20 \
+    -p 21:21 \
+    -v $(pwd)/vsftpd:/etc/vsftpd \
+    s48763/vsftpd
+```
+
+#### --name string 
+
+```
+$ docker create --name vsftpd \
     -p 20:20 \
     -p 21:21 \
     -v $(pwd)/vsftpd:/etc/vsftpd \
     -d 48763/vsftpd
 ```
-
-#### --name string 
-
-
-#### --network string 
-
-
-#### -p, --publish list 
-
 
 #### --restart string 
 
@@ -101,10 +127,24 @@ docker run --name vsftpd \
 
 #### --rm 
 
+```
+$ docker create \
+    --rm \
+    48763/vsftpd
+```
+
+#### -i, --interactive 
+
+```
+$ docker create \
+    -i 48763/vsftpd /bin/sh
+```
 
 #### -t, --tty 
 
-
-#### -v, --volume list 
+```
+$ docker create \
+    -t 48763/vsftpd /bin/sh
+```
 
 ## rm
