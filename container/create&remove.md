@@ -93,7 +93,7 @@ $ docker create \
     -p 20:20 \
     -p 21:21 \
     -v $(pwd)/vsftpd:/etc/vsftpd \
-    s48763/vsftpd
+    48763/vsftpd
 ```
 
 #### -v, --volume list 
@@ -103,7 +103,7 @@ $ docker create \
     -p 20:20 \
     -p 21:21 \
     -v $(pwd)/vsftpd:/etc/vsftpd \
-    s48763/vsftpd
+    48763/vsftpd
 ```
 
 #### --name string 
@@ -113,7 +113,7 @@ $ docker create --name vsftpd \
     -p 20:20 \
     -p 21:21 \
     -v $(pwd)/vsftpd:/etc/vsftpd \
-    -d 48763/vsftpd
+    48763/vsftpd
 ```
 
 #### --restart string 
