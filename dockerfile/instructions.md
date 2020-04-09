@@ -16,7 +16,7 @@ dcokerfile 支援的指令列表：
 - [HEALTHCHECK](#healthcheck)
 
 
-## 基礎容器運行指令
+## 基礎容器操作指令
 
 該篇著重在 dockefile 指令，但為了測試其指令功能對鏡像或容器的作用，得先瞭解下面三項操作容器的指令：
 

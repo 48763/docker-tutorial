@@ -3,6 +3,34 @@
 - [create](#create)
 - [rm](#rm)
 
+## 基礎容器操作指令
+
+該篇著重在 dockefile 指令，但為了測試其指令功能對鏡像或容器的作用，得先瞭解下面三項操作容器的指令：
+
+### 啟動容器：
+
+```bash 
+$ docker start <container-id>|<container-name>
+```
+
+### 查看容器狀態
+
+```bash
+$ docker ps -a
+```
+
+**-a：查看所有容器。**
+
+### 刪除容器：
+
+```bash
+$ docker rm --force <container-name>
+```
+
+**--force：強制執行**
+
+***可以在每個小節測試完畢後，將實驗用的容器刪除。***
+
 ## create
 
 ```bash
@@ -28,7 +56,7 @@ Create a new container
 |  -t, --tty             | Allocate a pseudo-TTY |
 |  -v, --volume list     | Bind mount a volume |
 
-
+選定鏡像以創建容器：
 
 ```
 $ docker create 48763/vsftpd
@@ -37,14 +65,28 @@ $ docker create 48763/vsftpd
 
 #### --cidfile string 
 
+將創建的容器識別碼（id）輸出至指定的檔案：
+
 ```
 $ docker create --cidfile vsftpd-id 48763/vsftpd
-11a42ada866861b4afa84744f2dd85eded119c9f0f32f63ad661cf68f5de1302
+ccffd61e23467c536c86ca31b763156fc9c39a1a1ae7334b914b3febbfa52ce2
 $ cat vsftpd-id && echo 
-11a42ada866861b4afa84744f2dd85eded119c9f0f32f63ad661cf68f5de1302
+ccffd61e23467c536c86ca31b763156fc9c39a1a1ae7334b914b3febbfa52ce2
 ```
 
+可以用 `docker ps -a` 查看容器識別碼（id）：
+
+```
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+ccffd61e2346        48763/vsftpd        "sh run vsftpd vsftp…"   5 seconds ago       Created                                 inspiring_engelbart
+```
+
+> 識別碼（id）僅會顯示前面的部分。
+
 #### -p, --publish list 
+
+將本機的傳輸埠和容器的傳輸埠串聯在一起：
 
 ```
 $ docker create \
@@ -53,16 +95,78 @@ $ docker create \
     48763/vsftpd
 ```
 
+> `-p 20:20`：前面的 20 是指本機的傳輸埠，後面的 20 是指容器的傳輸埠。通常會設定一樣，以方便辨識和管理。
+
+容器要運行後，才會佔用傳輸埠。使用下面指令啟動容器，並查看容器狀態欄位 `PORTS`：
+
+```
+$ docker start ead1b9b7895b
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                      NAMES
+ead1b9b7895b        48763/vsftpd        "sh run vsftpd vsftp…"   About a minute ago   Up 15 seconds       0.0.0.0:20-21->20-21/tcp   gracious_shirley
+```
+
+可以發現欄位 `PORTS` 多了 `0.0.0.0:20-21->20-21/tcp`。這就表示容器的傳輸埠有映射到本機。
+
+也可以使用 `ftp` 嘗試連線：
+```
+$ ftp 10.0.2.15
+Connected to 10.0.2.15.
+220 Welcome to blah FTP service.
+Name (10.0.2.15:vagrant): 
+```
+
+更深入瞭解其映射方法，可以使用 `iptables` 查看：
+
+```
+$ iptables -L -t nat -v 
+Chain DOCKER (2 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 RETURN     all  --  docker0 any     anywhere             anywhere            
+    0     0 DNAT       tcp  --  !docker0 any     anywhere             anywhere             tcp dpt:ftp to:172.17.0.2:21
+    0     0 DNAT       tcp  --  !docker0 any     anywhere             anywhere             tcp dpt:ftp-data to:172.17.0.2:20
+```
+
 #### --network string 
+
+設定容器使用的網路：
 
 ```
 $ docker create \
-    --network bridge \
+    --network host \
     48763/vsftpd
 ```
 
+> 選定 host 的話，是使用本機的網路環境。不選定網路，預設是 `bridge`。
+
+使用下面指令啟動容器，並查看容器狀態欄位 `PORTS`：
+
 ```
-$ docker network ls
+$ docker start cff25700c554
+$ docker ps -a 
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS               NAMES
+cff25700c554        48763/vsftpd        "sh run vsftpd vsftp…"   12 minutes ago      Up 11 minutes                                     quirky_kare
+```
+
+可以發現欄位 `PORTS` 是空的。
+
+*在啟用該容器前，就已經有傳輸埠佔用，啟動後 `STATUS` 將會因為傳輸埠被佔用，而顯示 `Exited (2)`。所以必須確認傳輸埠沒有被佔用。*
+
+
+我們仍可以使用 `ftp` 連線：
+
+```
+$ ftp 10.0.2.15
+Connected to 10.0.2.15.
+220 Welcome to blah FTP service.
+Name (10.0.2.15:vagrant): 
+```
+也可以使用下面指令查看埠的使用：
+
+```
+$ netstat -tupln | grep 21
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      25566/vsftpd
 ```
 
 #### -e, --env list 
