@@ -5,7 +5,7 @@
 
 ## 基礎容器操作指令
 
-該篇著重在 dockefile 指令，但為了測試其指令功能對鏡像或容器的作用，得先瞭解下面三項操作容器的指令：
+該篇著重在 `create` 和 `rm`，但為了測試其選項功能對容器的作用，得先瞭解下面三項操作容器的指令：
 
 ### 啟動容器：
 
@@ -19,7 +19,7 @@ $ docker start <container-id>|<container-name>
 $ docker ps -a
 ```
 
-**-a：查看所有容器。**
+**-a：查看所有容器、相關資訊及狀態。**
 
 ### 刪除容器：
 
@@ -32,6 +32,8 @@ $ docker rm --force <container-name>
 ***可以在每個小節測試完畢後，將實驗用的容器刪除。***
 
 ## create
+
+基於一鏡像創建新的容器。
 
 ```bash
 docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
@@ -56,7 +58,9 @@ Create a new container
 |  -t, --tty             | Allocate a pseudo-TTY |
 |  -v, --volume list     | Bind mount a volume |
 
-選定鏡像以創建容器：
+*本節僅使用 [vsftpd](https://en.wikipedia.org/wiki/Vsftpd) 應用的鏡像，作為創建容器操作的範例。*
+
+基於 vsftpd 鏡像創建容器：
 
 ```
 $ docker create 48763/vsftpd
@@ -74,7 +78,7 @@ $ cat vsftpd-id && echo
 ccffd61e23467c536c86ca31b763156fc9c39a1a1ae7334b914b3febbfa52ce2
 ```
 
-可以用 `docker ps -a` 查看容器識別碼（id）：
+能用下面指令查看容器識別碼（id）：
 
 ```
 $ docker ps -a
@@ -97,7 +101,7 @@ $ docker create \
 
 > `-p 20:20`：前面的 20 是指本機的傳輸埠，後面的 20 是指容器的傳輸埠。通常會設定一樣，以方便辨識和管理。
 
-容器要運行後，才會佔用傳輸埠。使用下面指令啟動容器，並查看容器狀態欄位 `PORTS`：
+容器要運行後，才會佔用傳輸埠。使用下面指令啟動容器，並查看其狀態中的 `PORTS`欄位：
 
 ```
 $ docker start ead1b9b7895b
@@ -106,15 +110,18 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ead1b9b7895b        48763/vsftpd        "sh run vsftpd vsftp…"   About a minute ago   Up 15 seconds       0.0.0.0:20-21->20-21/tcp   gracious_shirley
 ```
 
-可以發現欄位 `PORTS` 多了 `0.0.0.0:20-21->20-21/tcp`。這就表示容器的傳輸埠有映射到本機。
+可以發現對應 `PORTS` 欄位多了 `0.0.0.0:20-21->20-21/tcp`。這就表示容器的傳輸埠有映射到本機。
 
-也可以使用 `ftp` 嘗試連線：
+可以使用 `ftp` 嘗試連線：
 ```
 $ ftp 10.0.2.15
 Connected to 10.0.2.15.
 220 Welcome to blah FTP service.
 Name (10.0.2.15:vagrant): 
 ```
+> 可使用 `ctrl` + `c` 強制跳出，或是在 ftp 終端介面輸入 `exit` 離開。
+
+> 可以和不添加 `-p` 所創建並啟動的容器做比較。
 
 更深入瞭解其映射方法，可以使用 `iptables` 查看：
 
@@ -126,6 +133,8 @@ Chain DOCKER (2 references)
     0     0 DNAT       tcp  --  !docker0 any     anywhere             anywhere             tcp dpt:ftp to:172.17.0.2:21
     0     0 DNAT       tcp  --  !docker0 any     anywhere             anywhere             tcp dpt:ftp-data to:172.17.0.2:20
 ```
+
+可以發現目的地到 `20` 和 `21` 的傳輸埠，都會被導向 `172.17.0.2`（容器的 ip）。
 
 #### --network string 
 
@@ -139,7 +148,7 @@ $ docker create \
 
 > 選定 host 的話，是使用本機的網路環境。不選定網路，預設是 `bridge`。
 
-使用下面指令啟動容器，並查看容器狀態欄位 `PORTS`：
+使用下面指令啟動容器，並查看容器狀態 `PORTS` 欄位：
 
 ```
 $ docker start cff25700c554
@@ -148,12 +157,12 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 cff25700c554        48763/vsftpd        "sh run vsftpd vsftp…"   12 minutes ago      Up 11 minutes                                     quirky_kare
 ```
 
-可以發現欄位 `PORTS` 是空的。
+可以發現 `PORTS` 欄位是空的。
 
-*在啟用該容器前，就已經有傳輸埠佔用，啟動後 `STATUS` 將會因為傳輸埠被佔用，而顯示 `Exited (2)`。所以必須確認傳輸埠沒有被佔用。*
+> 在啟用該容器時，如果要使用的傳輸埠已被佔用，`STATUS` 將會顯示 `Exited (2)`。所以必須確認傳輸埠沒有被佔用。*
 
 
-我們仍可以使用 `ftp` 連線：
+使用 `ftp` 確認是否可以連線：
 
 ```
 $ ftp 10.0.2.15
@@ -161,7 +170,8 @@ Connected to 10.0.2.15.
 220 Welcome to blah FTP service.
 Name (10.0.2.15:vagrant): 
 ```
-也可以使用下面指令查看埠的使用：
+
+可使用下面指令查看傳輸埠的使用：
 
 ```
 $ netstat -tupln | grep 21
@@ -171,15 +181,20 @@ tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      
 
 #### -e, --env list 
 
+設定運行容器中的環境變數：
+
 ```
 $ docker create \
     -p 20:20 \
     -p 21:21 \
+    -p 60000-61000:60000-61000 \
     -e PASV_ENABLE=YES \
     48763/vsftpd
 ```
 
 #### --env-file list 
+
+讀取檔案，以設定運行容器中的環境變數：
 
 ```
 $ docker create \
