@@ -225,18 +225,10 @@ $ docker create \
 
 其驗證方式，和 [-e](#-e---env-list) 一樣。
 
-#### --mount mount 
-
-```bash
-$ docker create \
-    -p 20:20 \
-    -p 21:21 \
-    -v $(pwd)/vsftpd:/etc/vsftpd \
-    48763/vsftpd
-```
-
 #### -v, --volume list 
 
+將本地的 `$(pwd)/vsftpd` 掛載到容器內的 `/etc/vsftpd`：
+
 ```bash
 $ docker create \
     -p 20:20 \
@@ -244,6 +236,47 @@ $ docker create \
     -v $(pwd)/vsftpd:/etc/vsftpd \
     48763/vsftpd
 ```
+
+透過下面指令，啟用並查看容器內的檔案：
+
+```
+$ docker start 561b3d4bcbde
+$ docker exec 561b3d4bcbde ls
+addftpuser
+run
+vsftpd-run.conf
+vsftpd.conf
+```
+
+在本地和容器新增檔案：
+
+```
+$ touch vsftpd/test1
+$ docker exec 561b3d4bcbde touch test2
+```
+
+再次檢查本地與容器內的檔案：
+
+```
+$ ls vsftpd
+$ docker exec 561b3d4bcbde ls
+```
+
+會發現前面新增的檔案 `test2` 和 `test2`，不論容是本地或器內，都是存在的。
+
+#### --mount mount 
+
+掛載本地目錄/卷宗（volume）到容器內：
+
+```bash
+$ docker create \
+    -p 20:20 \
+    -p 21:21 \
+    --mount type=bind,src=$(pwd)/vsftpd,dst=/etc/vsftpd \
+    48763/vsftpd
+```
+
+其驗證方式，和 [-v](#-v---volume-list) 一樣。
 
 #### --name string
 
@@ -268,10 +301,10 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 | Flag | Description |
 | - | - |
-| no | Do not automatically restart the container. (the default) |
-| on-failure | Restart the container if it exits due to an error, which manifests as a non-zero exit code. |
-| always | Always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted. (See the second bullet listed in restart policy details) |
-| unless-stopped | Similar to always, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts. |
+| no | 不自動重啟容器。（預設值） |
+| on-failure | 重啟退出代碼非零的容器。 |
+| always | 總是重啟暫停的容器。假如是手動關閉，僅會在 docker 守護進程（dockerd）重啓，以及容器手動重啓的狀況下，才會再次執行重啓功能。 |
+| unless-stopped | 與 `always` 類似，Similar to always, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts. |
 
 #### --rm 
 
