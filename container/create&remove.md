@@ -304,9 +304,11 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 | no | 不自動重啟容器。（預設值） |
 | on-failure | 重啟退出代碼非零的容器。 |
 | always | 總是重啟暫停的容器。假如是手動關閉，僅會在 docker 守護進程（dockerd）重啓，以及容器手動重啓的狀況下，才會再次執行重啓功能。 |
-| unless-stopped | 與 `always` 類似，Similar to always, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts. |
+| unless-stopped | 與 `always` 類似，除了容器停止時（手動或其它方式），即便重啟 docker 守護進程也不會重啟。 |
 
 #### --rm 
+
+創建的容器運行後，如果有退出，容器將會自動移除：
 
 ```
 $ docker create \
@@ -314,12 +316,35 @@ $ docker create \
     48763/vsftpd
 ```
 
+逐行輸入下面指令，就可以觀察到該容器在停止後，就會被移除掉：
+
+```
+$ docker create --name vsftpd --rm  48763/vsftpd
+$ docker start vsftpd
+$ docker ps
+$ docker stop vsftpd
+$ docker ps
+```
+
 #### -i, --interactive 
+
+將本機的標準輸入連接到容器：
 
 ```
 $ docker create \
     -i 48763/vsftpd /bin/sh
 ```
+
+創建完後，可以使用下面指令啟用，並嘗試鍵入 `pwd`：
+
+```
+$ docker start -i vsftpd
+pwd
+/
+exit
+```
+
+容器在 `start` 運行後，系統的標準輸入被導向到容器內，所以後續的操作，都是在容器內。
 
 #### -t, --tty 
 
@@ -329,3 +354,8 @@ $ docker create \
 ```
 
 ## rm
+
+
+## 參考
+
+- VonC, [CONFUSE ABOUT DOCKER'S -I "KEEP STDIN OPEN EVEN IF NOT ATTACHED"](https://stackoverflow.com/questions/36563630/confuse-about-dockers-i-keep-stdin-open-even-if-not-attached), English
