@@ -10,7 +10,7 @@
 ### 啟動容器：
 
 ```bash
-$ docker start <container-id>|<container-name>
+$ docker start <container-name-or-id>
 ```
 
 ### 查看容器狀態
@@ -68,6 +68,27 @@ Create a new container
 $ docker create 48763/vsftpd
 75ac9dad9541ce6b069b46b5b2d34d7a5ed468b198dd8370b4a3d6ad857e923a
 ```
+
+其返回值，就是容器唯一性的 `id`。
+
+#### --name string
+
+自定義容器的名稱：
+
+```bash
+$ docker create --name vsftpd \
+    48763/vsftpd
+```
+
+查看容器的狀態：
+
+```bash
+$ docker ps -a 
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                            NAMES
+251fcb9925f7        48763/vsftpd        "sh run vsftpd vsftp…"   3 seconds ago       Created                                                                              vsftpd
+```
+
+可以發現對應 `NAME` 欄位的名稱，就變成自定義的名稱，否則就是系統隨機命名。
 
 #### --cidfile string 
 
@@ -263,25 +284,6 @@ $ docker create \
 
 其驗證方式，和 [-v](#-v---volume-list) 一樣。
 
-#### --name string
-
-自定義容器的名稱：
-
-```bash
-$ docker create --name vsftpd \
-    48763/vsftpd
-```
-
-查看容器的狀態：
-
-```bash
-$ docker ps -a 
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                            NAMES
-251fcb9925f7        48763/vsftpd        "sh run vsftpd vsftp…"   3 seconds ago       Created                                                                              vsftpd
-```
-
-可以發現對應 `NAME` 欄位的名稱，就變成自定義的名稱，否則就是系統隨機命名。
-
 #### --restart string 
 
 | Flag | Description |
@@ -345,13 +347,13 @@ $ docker create --name vsftpd \
 使用下面的指令啟用容器，並測試終端：
 
 ```
-$ docker start -i vsftpd
+$ docker start -i vsftpd
 root@8c9639739bdc:/# 
 ```
 
 > -i：連接容器的標準輸入
 
-但會發現，終端不接受任何指令，因為容器本身創建時，並沒有開通標準輸入 `-i`。所以正常會使用：
+但會發現，終端不接受任何指令，因為容器本身創建時，並沒有開通標準輸入 `-i`。所以正常會使用：
 
 ```
 $ docker create --name vsftpd \
@@ -362,6 +364,46 @@ $ docker create --name vsftpd \
 
 ## rm
 
+刪除一個或多個容器。
+
+```bash
+docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+```
+
+### 選項
+
+| 名稱 | 描述 |
+| - | - |
+| -f, --force   | Force the removal of a running container (uses SIGKILL) |
+| -v, --volumes | Remove anonymous volumes associated with the container |
+
+刪除 **id** 為 `32ef941c4543` 和**名稱**為 `vsftpd` 的容器：
+
+```
+$ docker rm 32ef941c4543 vsftpd
+```
+
+*如果容器正在運行中，就無法使用該指令刪除。就必須要執行 `docker stop`，再次執行刪除即可。*
+
+#### -f, --force
+
+強制刪除正在運行的容器：
+
+```
+$ docker rm -f vsftpd
+```
+
+> 通常不建議在正式環境中執行強制刪除，以避免誤刪的情況。
+
+#### -v, --volumes
+
+刪除與該容器有關連的匿名卷宗：
+
+```
+$ docker rm -v vsftpd
+```
 
 ## 參考
 
