@@ -328,30 +328,53 @@ $ docker ps
 
 #### -i, --interactive 
 
-將本機的標準輸入連接到容器：
+開通容器的標準輸入：
 
 ```
-$ docker create \
+$ docker create --name vsftpd-1 \
     -i 48763/vsftpd /bin/sh
 ```
 
-創建完後，可以使用下面指令啟用，並嘗試鍵入 `pwd`：
+可以執行下面指令再創建一個對照組：
 
 ```
-$ docker start -i vsftpd
-pwd
-/
-exit
+$ docker create --name vsftpd-2 \
+    48763/vsftpd /bin/sh
 ```
 
-容器在 `start` 運行後，系統的標準輸入被導向到容器內，所以後續的操作，都是在容器內。
+啟用後，查看容器狀態：
+
+```
+$ docker start vsftpd-1 vsftpd-2
+$ docker ps -a
+```
 
 #### -t, --tty 
 
+替容器創建一個 `tty`：
+
 ```
-$ docker create \
+$ docker create --name vsftpd \
     -t 48763/vsftpd /bin/sh
 ```
+
+使用下面的指令啟用容器，並測試終端：
+
+```
+$ docker start -i vsftpd
+root@8c9639739bdc:/# 
+```
+
+> -i：連接容器的標準輸入
+
+但會發現，終端不接受任何指令，因為容器本身創建時，並沒有開通標準輸入 `-i`。所以正常會使用：
+
+```
+$ docker create --name vsftpd \
+    -it 48763/vsftpd /bin/sh
+```
+
+再次啟用容器後，就能正常使用終端。
 
 ## rm
 
