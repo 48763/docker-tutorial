@@ -24,10 +24,10 @@ $ docker ps -a
 ### 刪除容器
 
 ```bash
-$ docker rm --force <container-name>
+$ docker rm -f <container-name-or-id>
 ```
 
-**--force：強制執行**
+**-f, --force：強制執行**
 
 ***可以在每個小節測試完畢後，將實驗用的容器刪除。***
 
@@ -74,7 +74,8 @@ $ docker create 48763/vsftpd
 將創建的容器識別碼（id）輸出至指定的檔案：
 
 ```bash
-$ docker create --cidfile vsftpd-id 48763/vsftpd
+$ docker create --name vsftpd \
+    --cidfile vsftpd-id 48763/vsftpd
 ccffd61e23467c536c86ca31b763156fc9c39a1a1ae7334b914b3febbfa52ce2
 $ cat vsftpd-id && echo 
 ccffd61e23467c536c86ca31b763156fc9c39a1a1ae7334b914b3febbfa52ce2
@@ -92,10 +93,10 @@ ccffd61e2346        48763/vsftpd        "sh run vsftpd vsftp…"   5 seconds ago
 
 #### -p, --publish list 
 
-將本機的傳輸埠和容器的傳輸埠串聯在一起：
+開放容器的傳輸埠，並將其和本機串聯在一起：
 
 ```bash
-$ docker create \
+$ docker create --name vsftpd \
     -p 20:20 \
     -p 21:21 \
     48763/vsftpd
@@ -106,7 +107,7 @@ $ docker create \
 容器要運行後，才會佔用傳輸埠。使用下面指令啟動容器，並查看其狀態中的 `PORTS` 欄位：
 
 ```bash
-$ docker start ead1b9b7895b
+$ docker start vsftpd
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                      NAMES
 ead1b9b7895b        48763/vsftpd        "sh run vsftpd vsftp…"   About a minute ago   Up 15 seconds       0.0.0.0:20-21->20-21/tcp   gracious_shirley
@@ -144,7 +145,7 @@ Chain DOCKER (2 references)
 設定容器使用的網路：
 
 ```bash
-$ docker create \
+$ docker create --name vsftpd \
     --network host \
     48763/vsftpd
 ```
@@ -154,15 +155,15 @@ $ docker create \
 使用下面指令啟動容器，並查看容器狀態 `PORTS` 欄位：
 
 ```bash
-$ docker start cff25700c554
+$ docker start vsftpd
 $ docker ps -a 
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS               NAMES
-cff25700c554        48763/vsftpd        "sh run vsftpd vsftp…"   12 minutes ago      Up 11 minutes                                     quirky_kare
+cff25700c554        48763/vsftpd        "sh run vsftpd vsftp…"   12 minutes ago      Up 11 minutes                                     vsftpd
 ```
 
 會發現 `PORTS` 欄位是空的。
 
-> 在啟用該容器時，如果要使用的傳輸埠已被佔用，`STATUS` 將會顯示 `Exited (2)`。所以必須確認傳輸埠沒有被佔用。*
+> 在啟用該容器時，如果欲使用的傳輸埠已被佔用，`STATUS` 將會顯示 `Exited (2)`。所以必須確認傳輸埠沒有被佔用。*
 
 
 使用 `ftp` 確認是否可以連線：
@@ -187,7 +188,7 @@ tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      
 設定運行容器中的環境變數：
 
 ```bash
-$ docker create \
+$ docker create --name vsftpd \
     -p 20:20 \
     -p 21:21 \
     -p 60000-61000:60000-61000 \
@@ -227,42 +228,26 @@ $ docker create \
 
 #### -v, --volume list 
 
-將本地的 `$(pwd)/vsftpd` 掛載到容器內的 `/etc/vsftpd`：
+將本地的 `$(pwd)/data` 掛載到容器內的 `/data`：
 
 ```bash
-$ docker create \
+$ docker create --name vsftpd \
     -p 20:20 \
     -p 21:21 \
-    -v $(pwd)/vsftpd:/etc/vsftpd \
+    -v $(pwd)/data:/data \
     48763/vsftpd
 ```
 
 透過下面指令，啟用並查看容器內的檔案：
 
 ```
-$ docker start 561b3d4bcbde
-$ docker exec 561b3d4bcbde ls
-addftpuser
-run
-vsftpd-run.conf
-vsftpd.conf
+$ docker start vsftpd
+$ touch data/test.txt
+$ docker exec vsftpd ls /data
+test.txt
 ```
 
-在本地和容器新增檔案：
-
-```
-$ touch vsftpd/test1
-$ docker exec 561b3d4bcbde touch test2
-```
-
-再次檢查本地與容器內的檔案：
-
-```
-$ ls vsftpd
-$ docker exec 561b3d4bcbde ls
-```
-
-會發現前面新增的檔案 `test2` 和 `test2`，不論容是本地或器內，都是存在的。
+會發現前面新增的檔案 `test.txt`，也會在容器中出現。
 
 #### --mount mount 
 
@@ -272,7 +257,7 @@ $ docker exec 561b3d4bcbde ls
 $ docker create \
     -p 20:20 \
     -p 21:21 \
-    --mount type=bind,src=$(pwd)/vsftpd,dst=/etc/vsftpd \
+    --mount type=bind,src=$(pwd)/data,dst=/data \
     48763/vsftpd
 ```
 
@@ -311,7 +296,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 創建的容器運行後，如果有退出，容器將會自動移除：
 
 ```
-$ docker create \
+$ docker create --name vsftpd \
     --rm \
     48763/vsftpd
 ```
@@ -319,7 +304,6 @@ $ docker create \
 逐行輸入下面指令，就可以觀察到該容器在停止後，就會被移除掉：
 
 ```
-$ docker create --name vsftpd --rm  48763/vsftpd
 $ docker start vsftpd
 $ docker ps
 $ docker stop vsftpd
