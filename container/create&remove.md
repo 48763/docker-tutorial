@@ -335,6 +335,8 @@ $ docker start vsftpd-1 vsftpd-2
 $ docker ps -a
 ```
 
+會發現 `vsftpd-2` 是退出的狀態。因為 `/bin/sh` 會等待標準輸入，可是該容器並沒有開通標準輸入 `-i`，而導致容器退出。
+
 #### -t, --tty 
 
 替容器創建一個 `tty`：
