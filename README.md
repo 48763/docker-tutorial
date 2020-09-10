@@ -63,7 +63,6 @@
     - [狀態查詢](container/status.md#狀態查詢)（[ps](container/status.md#ps)）
     - [運行控制](container/process-control.md#運行控制)（
         [start](container/process-control.md#start)/
-        [run](container/process-control.md#run)/
         [stop](container/process-control.md#stop)/
         [pause](container/process-control.md#pause)/
         [unpause](container/process-control.md#unpause)/
