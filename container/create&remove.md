@@ -378,8 +378,8 @@ Remove one or more containers
 
 | 名稱 | 描述 |
 | - | - |
-| -f, --force   | Force the removal of a running container (uses SIGKILL) |
-| -v, --volumes | Remove anonymous volumes associated with the container |
+| [-f, --force  ](#-f---force) | Force the removal of a running container (uses SIGKILL) |
+| [-v, --volumes](#-v---volumes) | Remove anonymous volumes associated with the container |
 
 刪除 **id** 為 `32ef941c4543` 和**名稱**為 `vsftpd` 的容器：
 
