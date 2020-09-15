@@ -45,18 +45,18 @@ Create a new container
 
 | 名稱 | 描述 |
 | - | - |
-|      --cidfile string  | Write the container ID to the file |
-|  -e, --env list        | Set environment variables |
-|      --env-file list   | Read in a file of environment variables |
-|  -i, --interactive     | Keep STDIN open even if not attached |
-|      --mount mount     | Attach a filesystem mount to the container |
-|      --name string     | Assign a name to the container |
-|      --network string  | Connect a container to a network (default "default") |
-|  -p, --publish list    | Publish a container's port(s) to the host |
-|      --restart string  | Restart policy to apply when a container exits (default "no") |
-|      --rm              | Automatically remove the container when it exits |
-|  -t, --tty             | Allocate a pseudo-TTY |
-|  -v, --volume list     | Bind mount a volume |
+| [    --cidfile string](#--cidfile) | Write the container ID to the file |
+| [-e, --env list      ](#-e---env) | Set environment variables |
+| [    --env-file list ](#--env-file) | Read in a file of environment variables |
+| [-i, --interactive   ](#-i---interactive) | Keep STDIN open even if not attached |
+| [    --mount mount   ](#--mount) | Attach a filesystem mount to the container |
+| [    --name string   ](#--name) | Assign a name to the container |
+| [    --network string](#--network) | Connect a container to a network (default "default") |
+| [-p, --publish list  ](#-p---publish) | Publish a container's port(s) to the host |
+| [    --restart string](#--restart) | Restart policy to apply when a container exits (default "no") |
+| [    --rm            ](#--rm) | Automatically remove the container when it exits |
+| [-t, --tty           ](#-t---tty) | Allocate a pseudo-TTY |
+| [-v, --volume list   ](#-v---volume) | Bind mount a volume |
 
 *本節僅使用 [vsftpd](https://en.wikipedia.org/wiki/Vsftpd) 應用的鏡像，作為創建容器操作的範例。*
 
@@ -71,7 +71,7 @@ $ docker create 48763/vsftpd
 
 其返回值，就是容器唯一性的 `id`。
 
-#### --name string
+#### --name
 
 自定義容器的名稱：
 
@@ -90,7 +90,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 可以發現對應 `NAME` 欄位的名稱，就變成自定義的名稱，否則就是系統隨機命名。
 
-#### --cidfile string 
+#### --cidfile
 
 將創建的容器識別碼（id）輸出至指定的檔案：
 
@@ -112,7 +112,7 @@ ccffd61e2346        48763/vsftpd        "sh run vsftpd vsftp…"   5 seconds ago
 
 > 識別碼（id）僅會顯示前面的部分。
 
-#### -p, --publish list 
+#### -p, --publish
 
 開放容器的傳輸埠，並將其和本機串聯在一起：
 
@@ -161,7 +161,7 @@ Chain DOCKER (2 references)
 
 可以發現目的地到 `20` 和 `21` 的傳輸埠，都會被導向 `172.17.0.2`（容器的 ip）。
 
-#### --network string 
+#### --network
 
 設定容器使用的網路：
 
@@ -204,7 +204,7 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      25566/vsftpd
 ```
 
-#### -e, --env list 
+#### -e, --env
 
 設定運行容器中的環境變數：
 
@@ -232,7 +232,7 @@ pasv_min_port=60000
 
 > 容器內部運作的程序，要看其 dockerfile 如何撰寫，可以參考章節：[dockerfile](../dockerfile)
 
-#### --env-file list 
+#### --env-file
 
 讀取檔案，以設定運行容器中的環境變數：
 
@@ -247,7 +247,7 @@ $ docker create \
 
 其驗證方式，和 [-e](#-e---env-list) 一樣。
 
-#### -v, --volume list 
+#### -v, --volume
 
 將本地的 `$(pwd)/data` 掛載到容器內的 `/data`：
 
@@ -270,7 +270,7 @@ test.txt
 
 會發現前面新增的檔案 `test.txt`，也會在容器中出現。
 
-#### --mount mount 
+#### --mount
 
 掛載本地目錄/卷宗（volume）到容器內：
 
@@ -284,7 +284,7 @@ $ docker create \
 
 其驗證方式，和 [-v](#-v---volume-list) 一樣。
 
-#### --restart string 
+#### --restart
 
 | Flag | Description |
 | - | - |
