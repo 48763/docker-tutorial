@@ -1,10 +1,11 @@
 # 運行控制
     
 - [start](#start)
+- [stop](#stop)
+- [kill](#kill)
 - [pause](#pause)
 - [unpause](#unpause)
-- [kill](#kill)
-- [stop](#stop)
+
 
 ## start
 
