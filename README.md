@@ -60,13 +60,13 @@
     - [創建和移除](container/create&remove.md#創建和移除)（
         [create](container/create&remove.md#create)/
         [rm](container/create&remove.md#rm)）
-    - [狀態查詢](container/status.md#狀態查詢)（[ps](container/status.md#ps)）
     - [運行控制](container/process-control.md#運行控制)（
         [start](container/process-control.md#start)/
         [stop](container/process-control.md#stop)/
         [pause](container/process-control.md#pause)/
         [unpause](container/process-control.md#unpause)/
         [kill](container/process-control.md#kill)）
+    - [狀態查詢](container/status.md#狀態查詢)（[ps](container/status.md#ps)）
     - [額外指令執行](container/execute.md#額外指令執行)（[exec](container/execute.md#exec)）
     - [檔案複製](container/copy.md#檔案複製)（[cp](container/copy.md#cp)）
 - 卷宗
