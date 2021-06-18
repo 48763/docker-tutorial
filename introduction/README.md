@@ -50,7 +50,7 @@ Docker 所使用的虛擬化技術與 VM（[Virtual Machine](https://zh.wikipedi
 
 只要每位協作人員使用相同的鏡像（[image][viii]）以運行容器（[container][ix]），便能使人員的開發環境保持一致性。
 
-- 簡化開發管道（[pipeline][vii])）：
+- 簡化開發管道（[pipeline][vii]）：
 
 在開發過程中，人員不太需要顧慮到系統與環境的建置，只要容器一啟用，便能專注於開發上。
 
@@ -60,7 +60,7 @@ Docker 所使用的虛擬化技術與 VM（[Virtual Machine](https://zh.wikipedi
 
 #### 使用 docker 時 - 
 
-- 簡化部署管道（[pipeline](vii))）：
+- 簡化部署管道（[pipeline](vii)）：
 
 當建構完成時，可以將其環境需求及代碼全都打包至鏡像（[image][viii]），便能將其交付予客戶至伺服器上運行容器（[container][ix]）。
 
