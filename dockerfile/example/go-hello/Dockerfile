@@ -1,4 +1,4 @@
-FROM golang:alpine AS build-env
+FROM golang:1.11.9-alpine3.8 AS build-env
 ADD src/ /opt/src
 RUN set -x \
 	&& cd /opt/src/ \ 
