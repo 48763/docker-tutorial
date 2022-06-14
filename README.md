@@ -87,7 +87,7 @@
 - 容器
     - stack
 - [儲存倉](registry#儲存倉)
-    - distribution
+    - [distribution](registry/distribution#distribution)
     - docket
     - [Harbor](registry/harbor#-harbor)
 - Compose
