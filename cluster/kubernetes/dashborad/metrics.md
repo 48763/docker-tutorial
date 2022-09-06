@@ -5,7 +5,7 @@
 ### 創建服務帳戶與權限綁定
 
 ```
-$ kubectl apply -f kubelet-ac.md
+$ kubectl apply -f monitor-ac.md
 ```
 
 ### 獲取服務帳戶的 `token`
