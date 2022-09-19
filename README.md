@@ -8,7 +8,6 @@
 個人訂定的個人目標之一，就是撰寫出一系列完整的教學文件，分別有：
 - [Docker](#-docker)
 - Promethues
-- ELK
 - Jenkins
 
 第一個要完成的是 - *Docker*。
