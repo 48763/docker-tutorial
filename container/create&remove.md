@@ -54,7 +54,7 @@ Create a new container
 | [    --network string](#--network) | Connect a container to a network (default "default") |
 | [-p, --publish list  ](#-p---publish) | Publish a container's port(s) to the host |
 | [    --restart string](#--restart) | Restart policy to apply when a container exits (default "no") |
-| [    --rm            ](#--rm) | Automatically remove the container when it exits |
+| [    --rm            ](#rｍ) | Automatically remove the container when it exits |
 | [-t, --tty           ](#-t---tty) | Allocate a pseudo-TTY |
 | [-v, --volume list   ](#-v---volume) | Bind mount a volume |
 
@@ -293,9 +293,9 @@ $ docker create \
 | always | 總是重啟暫停的容器。假如是手動關閉，僅會在 docker 守護進程（dockerd）重啓，以及容器手動重啓的狀況下，才會再次執行重啓功能。 |
 | unless-stopped | 與 `always` 類似，除了容器停止時（手動或其它方式），即便重啟 docker 守護進程也不會重啟。 |
 
-#### --rm 
+#### --rｍ
 
-創建的容器運行後，如果有退出，容器將會自動移除：
+創建的容器在運行過後，只要應用程序退出，容器將會自動移除：
 
 ```
 $ docker create --name vsftpd \
