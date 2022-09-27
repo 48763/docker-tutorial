@@ -45,18 +45,18 @@ Create a new container
 
 | 名稱 | 描述 |
 | - | - |
-| [    --cidfile string](#--cidfile) | Write the container ID to the file |
-| [-e, --env list      ](#-e---env) | Set environment variables |
-| [    --env-file list ](#--env-file) | Read in a file of environment variables |
-| [-i, --interactive   ](#-i---interactive) | Keep STDIN open even if not attached |
-| [    --mount mount   ](#--mount) | Attach a filesystem mount to the container |
-| [    --name string   ](#--name) | Assign a name to the container |
-| [    --network string](#--network) | Connect a container to a network (default "default") |
-| [-p, --publish list  ](#-p---publish) | Publish a container's port(s) to the host |
-| [    --restart string](#--restart) | Restart policy to apply when a container exits (default "no") |
-| [    --rm            ](#--rm) | Automatically remove the container when it exits |
-| [-t, --tty           ](#-t---tty) | Allocate a pseudo-TTY |
-| [-v, --volume list   ](#-v---volume) | Bind mount a volume |
+| [    --cidfile string](#--cidfile) | 將容器 ID 寫入到指定檔案 |
+| [-e, --env list      ](#-e---env) | 設置容器內的環境變數 |
+| [    --env-file list ](#--env-file) | 從檔案讀取設置容器的環境變數 |
+| [-i, --interactive   ](#-i---interactive) | 保持標準輸入開啟 |
+| [    --mount mount   ](#--mount) | 將文件系統掛載到容器 |
+| [    --name string   ](#--name) | 替容器分配名稱 |
+| [    --network string](#--network) | 將容器連接到單一網路（預設為 `default`） |
+| [-p, --publish list  ](#-p---publish) | 將容器的傳輸埠映射到主機指定端口 |
+| [    --restart string](#--restart) | 容器退出時的重啟政策（預設 `no`） |
+| [    --rm            ](#--rm) | 容器退出時會自動刪除 |
+| [-t, --tty           ](#-t---tty) | 分配一個專端（pseudo-tty） |
+| [-v, --volume list   ](#-v---volume) | 綁定掛載到卷宗 |
 
 *本節僅使用 [vsftpd](https://en.wikipedia.org/wiki/Vsftpd) 應用的鏡像，作為創建容器操作的範例。*
 
