@@ -37,6 +37,26 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 
 #### -f, --filter
 
+使用過濾器對輸出進行篩選。下面表格是目前支持的過濾條件：
+
+| 過濾器 | 描述 |
+| - | - |
+| id | 容器的 ID |
+| name | 容器的名稱 |
+| label | 隨意字串表示一個鍵值或鍵值對。表示方式： `<key>` 或 `<key>=<value>` |
+| exited | 容器的退出整數代碼。僅適用於 `--all`. |
+| status | 下列其中之一： `created`, `restarting`, `running`, `removing`, `paused`, `exited`, 或 `dead` |
+| ancestor | 過濾共享同一個鏡像的容器。表示方式： `<image-name>[:<tag>]`, `<image id>`, 或 `<image@digest>` |
+| before/since | 給定一個容器 ID，依照該容器的創建時間前/後進行過濾 |
+| volume | 給定卷宗或綁定掛載，對運行中的容器過濾 |
+| network | 給定網路名稱，對運行中的容器連接過濾 |
+| publish/expose | 給定一傳輸埠，對容器埠號過濾。表示方式： `<port>[/<proto>]` 或 `<startport-endport>/[<proto>]` |
+| health | 基於健康檢查的狀態過濾。下列其中之一： `starting`, `healthy`, `unhealthy` 或 `none` |
+| isolation | （僅微軟使用） 下列其中之一： `default`, `process`, 或 `hyperv` |
+| is-task | 過濾作為 `task` 服務的容器Filters containers that are a “task” for a service. 布林選項 （`true` 或 `false`） |
+
+
+
 ```bash
 $ docker ps -f 
 ```
