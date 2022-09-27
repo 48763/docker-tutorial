@@ -286,7 +286,7 @@ $ docker create \
 
 #### --restart
 
-| Flag | Description |
+| 旗標 | 描述 |
 | - | - |
 | no | 不自動重啟容器。（預設值） |
 | on-failure | 重啟退出代碼非零的容器。 |
