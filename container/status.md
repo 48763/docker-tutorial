@@ -14,17 +14,19 @@ List containers
 
 | 名稱 | 描述 |
 | - | - |
-| [-a, --all          ](#-a---all) | Show all containers (default shows just running) |
-| [-f, --filter filter](#-f---filter) | Filter output based on conditions provided |
-| [    --format string](#--format) | Pretty-print containers using a Go template |
-| [-n, --last int     ](#-n---last) | Show n last created containers (includes all states) (default -1) |
-| [-l, --latest       ](#-l---latest) | Show the latest created container (includes all states) |
-| [    --no-trunc     ](#--no-trunc) | Don't truncate output |
-| [-q, --quiet        ](#-q---quiet) | Only display container IDs |
-| [-s, --size         ](#-s---size) | Display total file sizes |
+| [-a, --all          ](#-a---all) | 列出所有容器（預設只列出運行中） |
+| [-f, --filter filter](#-f---filter) | 基於提供的條件過濾輸出 |
+| [    --format string](#--format) | 使用 go 模板列出容器 |
+| [-n, --last int     ](#-n---last) | 列出最後 n個創建的容器（包含所有狀態） |
+| [-l, --latest       ](#-l---latest) | 列出最後一個創建的容器（包含所有狀態） |
+| [    --no-trunc     ](#--no-trunc) | 不截斷輸出 |
+| [-q, --quiet        ](#-q---quiet) | 只顯示容器 ID |
+| [-s, --size         ](#-s---size) | 顯示容器檔案大小 |
 
 
 #### -a, --all          
+
+預設輸出僅顯示狀態 `UP` 的容器，欲列出所有狀態的容器要使用 `-a/--all`：
 
 ```bash
 $ docker ps -a
@@ -47,6 +49,8 @@ $ docker ps --format
 
 #### -n, --last
 
+列出最後 n（任意數，範例為 `1`）個創建的容器：
+
 ```bash
 $ docker ps -n 1
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                      PORTS     NAMES
@@ -55,13 +59,19 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 
 #### -l, --latest
 
+列出最後一個創建的容器：
+
 ```bash
 $ docker ps -l 
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                      PORTS     NAMES
 14feba22e7f3   nginx:alpine   "/docker-entrypoint.…"   2 minutes ago   Exited (0) 54 seconds ago             test-2
 ```
 
+> 等效於 `docker ps -n 1`
+
 #### --no-trunc
+
+不截斷輸出的容器資訊：
 
 ```bash
 $ docker ps --no-trunc
@@ -71,10 +81,14 @@ CONTAINER ID                                                       IMAGE        
 
 #### -q, --quiet
 
+僅列出運行中的容器 ID：
+
 ```bash
 $ docker ps -q
 6bef0791654a
 ```
+
+列出所有的容器 ID：
 
 ```bash
 $ docker ps -aq
@@ -82,9 +96,15 @@ $ docker ps -aq
 6bef0791654a
 ```
 
+> ps 的指令只要加 `-q`，輸出一律都是 ID。
+
 #### -s, --size
+
+輸出容器的檔案大小：
 
 ```bash
 $ docker ps -s
 6bef0791654a   nginx:alpine   "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes   80/tcp    test-1    1.09kB (virtual 22.1MB)
 ```
+
+> 1.09kB (virtual 22.1MB)：容器曾大小（鏡像大小）
