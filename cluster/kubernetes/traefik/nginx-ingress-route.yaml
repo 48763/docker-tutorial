@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx
+  namespace: zone
+spec:
+  entryPoints:
+  - web
+  routes:
+  - kind: Rule
+#     match: Host(`nginx.gcp.hades.com`)
+    match: Path(`/`)
+    services:
+    - name: hades-nginx
+      port: 8000

@@ -1,0 +1,227 @@
+image:
+  name: traefik
+  tag: ""
+  pullPolicy: IfNotPresent
+
+deployment:
+  enabled: true
+  kind: DaemonSet
+  replicas: 1
+  terminationGracePeriodSeconds: 60
+  minReadySeconds: 0
+  annotations: {}
+  labels: {}
+  podAnnotations: {}
+  podLabels: {}
+  additionalContainers: []
+  additionalVolumes: []
+  initContainers: []
+  shareProcessNamespace: false
+  imagePullSecrets: []
+  lifecycle: {}
+
+podDisruptionBudget:
+  enabled: false
+
+ingressClass:
+  enabled: false
+  isDefaultClass: false
+  fallbackApiVersion: ""
+
+pilot:
+  enabled: false
+  token: ""
+
+experimental:
+  http3:
+    enabled: false
+  plugins:
+    enabled: false
+  kubernetesGateway:
+    enabled: false
+    gateway:
+      enabled: true
+
+ingressRoute:
+  dashboard:
+    enabled: true
+    annotations: {}
+    labels: {}
+    entryPoints: ["traefik"]
+
+rollingUpdate:
+  maxUnavailable: 1
+  maxSurge: 1
+
+readinessProbe:
+  failureThreshold: 1
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: false
+    allowExternalNameServices: false
+    allowEmptyServices: false
+    namespaces: []
+
+  kubernetesIngress:
+    enabled: true
+    allowExternalNameServices: false
+    allowEmptyServices: false
+    namespaces: []
+    publishedService:
+      enabled: false
+
+volumes: []
+
+additionalVolumeMounts: []
+
+logs:
+  general:
+    level: ERROR
+  access:
+    enabled: false
+    filters: {}
+    fields:
+      general:
+        defaultmode: keep
+        names: {}
+      headers:
+        defaultmode: drop
+        names: {}
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+
+tracing: {}
+
+globalArguments:
+  - "--global.checknewversion"
+  - "--global.sendanonymoususage"
+
+additionalArguments: 
+  - "--accesslog=true"
+  - "--accesslog.format=json"
+  - "--providers.kubernetesingress=true"
+  - "--providers.kubernetesingress.ingressendpoint.ip=127.0.0.1"
+  - "--providers.kubernetesingress.ingressclass=traefik"
+  - "--api=true"
+  - "--entryPoints.web.forwardedHeaders.insecure"
+
+env: []
+
+envFrom: []
+
+ports:
+  traefik:
+    port: 9000
+    expose: false
+    exposedPort: 9000
+    protocol: TCP
+  web:
+    port: 8000
+    expose: true
+    exposedPort: 80
+    protocol: TCP
+    nodePort: 30080
+  websecure:
+    port: 8443
+    expose: true
+    exposedPort: 443
+    protocol: TCP
+    tls:
+      enabled: false
+      options: ""
+      certResolver: ""
+      domains: []
+    middlewares: []
+    nodePort: 30443
+  metrics:
+    port: 9100
+    expose: true
+    exposedPort: 9100
+    protocol: TCP
+
+tlsOptions: {}
+
+tlsStore: {}
+
+service:
+  enabled: true
+  type: NodePort
+  annotations: {}
+  annotationsTCP: {}
+  annotationsUDP: {}
+  labels: {}
+  spec: {}
+  loadBalancerSourceRanges: []
+  externalIPs: []
+
+autoscaling:
+  enabled: false
+
+persistence:
+  enabled: false
+  name: data
+  accessMode: ReadWriteOnce
+  size: 128Mi
+  path: /data
+  annotations: {}
+
+certResolvers: {}
+
+hostNetwork: false
+
+rbac:
+  enabled: true
+
+  namespaced: false
+
+podSecurityPolicy:
+  enabled: false
+
+serviceAccount:
+  name: ""
+
+serviceAccountAnnotations: {}
+
+resources: {}
+affinity: {}
+nodeSelector: 
+  eks.amazonaws.com/nodegroup: cerberus 
+tolerations:
+  - key: "application"
+    operator: "Equal"
+    value: "traefik"
+    effect: "NoSchedule"
+  - key: "application"
+    operator: "Equal"
+    value: "traefik"
+    effect: "NoExecute"
+
+priorityClassName: ""
+
+securityContext:
+  capabilities:
+    drop: [ALL]
+  readOnlyRootFilesystem: true
+  runAsGroup: 65532
+  runAsNonRoot: true
+  runAsUser: 65532
+
+podSecurityContext:
+  fsGroup: 65532
+
+extraObjects: []

@@ -1,22 +1,29 @@
 # traefik
 
-
-## Ingress class
-
-*IngressClass* 內的 `controller` 的值固定為 `traefik.io/ingress-controller`，其源碼如下：
+### 創建命名空間
 
 ```
-# kubernetes.go#L33
-traefikDefaultIngressClassController = "traefik.io/ingress-controller"
-
-# client.go#L502
-for _, ic := range ingressClasses {
-    if ic.Spec.Controller == traefikDefaultIngressClassController {
-    ics = append(ics, ic)
-    }
-}
+$ kubectl create ns traefik
 ```
 
-> 源碼位址: [kubernetes.go](https://github.com/traefik/traefik/blob/master/pkg/provider/kubernetes/ingress/kubernetes.go#L33), [client.go](https://github.com/traefik/traefik/blob/master/pkg/provider/kubernetes/ingress/client.go#L502)
+### 使用 helm 部署
 
-> 好奇的原因是因為 nginx ingress controller 其值是可以自定義。
+#### 安裝
+
+```
+$ helm repo add traefik https://helm.traefik.io/traefik
+$ helm repo update
+$ helm install --namespace traefik --values=./values.yml traefik traefik/traefik
+```
+
+#### 更新
+
+```
+$ helm upgrade --namespace traefik traefik traefik/traefik -f values.yaml
+```
+
+#### 卸載
+
+```
+$ helm uninstall traefik --namespace traefik
+```
