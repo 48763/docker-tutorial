@@ -43,6 +43,7 @@ spec:
   tolerations:
   - key: "<key>"
     operator: "<operator>"
+    value: ""
     effect: "<effect>"
 ```
 
