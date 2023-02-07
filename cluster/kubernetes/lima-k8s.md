@@ -13,3 +13,9 @@ $ mkdir -p "/Users/yuki/.lima/k8s/conf"
 $ export KUBECONFIG="/Users/yuki/.lima/k8s/conf/kubeconfig.yaml"
 $ limactl shell k8s sudo cat /etc/kubernetes/admin.conf >$KUBECONFIG
 ```
+
+移除節點預設的污點設置：
+
+```
+$ kubectl taint nodes lima-k8s node-role.kubernetes.io/control-plane=:NoSchedule-
+```
