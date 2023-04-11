@@ -1,13 +1,15 @@
 # Kubelet 系統資訊
 
-## 安裝 kubernetes 的指標服務器
+## 安裝指標和儀表板
 
 ```
 $ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
+> `--kubelet-insecure-tls`: 添加在 args，以忽略 kubelet 的證書。
 
-## 獲取 prometheus 格式的指標
+## 獲取指標
 
 ### 創建服務帳戶與權限綁定
 
