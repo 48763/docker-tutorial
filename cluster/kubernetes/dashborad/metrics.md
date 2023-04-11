@@ -14,7 +14,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0
 ### 創建服務帳戶與權限綁定
 
 ```
-$ kubectl apply -f monitor-ac.md
+$ kubectl apply -f sa-admin.yaml
 ```
 
 ### 獲取服務帳戶的 `token`
