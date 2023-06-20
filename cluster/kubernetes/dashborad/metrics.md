@@ -20,7 +20,7 @@ $ kubectl apply -f sa-admin.yaml
 ### 獲取服務帳戶的 `token`
 
 ```
-$ kubectl -n kube-system get secrets monitoring-secret-token -o jsonpath='{.data.token}' | base64 -d
+$ kubectl -n kube-system get secrets test-admin-user-token-74nkx -o jsonpath='{.data.token}' | base64 -d
 ```
 
 ### 獲取叢集連線字串
