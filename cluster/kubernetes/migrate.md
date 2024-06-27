@@ -15,7 +15,7 @@ $ kubectl taint nodes <node_name> <key>=<value>:<effect><->
 #### effect
 
 - NoSchedule：僅有容忍該污點，否則 pod 將不會被放置該節點，***原本就存在的 pod 會繼續運行***。
-- PreferNoSchedule：系統會***避免***放置無法容忍（[`tolerations`](#容忍tolerations)）該污點的的 pod。是 `NoSchedule` 的軟化版。
+- PreferNoSchedule：系統會***避免***放置無法容忍（[`tolerations`](#容忍tolerations)）該污點的 pod。是 `NoSchedule` 的軟化版。
 - NoExecute：與 `NoSchedule` 差異在 - ***驅逐原本存在但無法容忍（[`tolerations`](#容忍tolerations)）的 pod***。
 - `-`：尾部串接 `-`，代表移除該污點。
 
@@ -26,6 +26,8 @@ $ kubectl taint nodes <node_name> <key>=<value>:<effect><->
 ```
 $ kubectl drain <node_name> --ignore-daemonsets --delete-local-data
 ```
+
+> DaemonSet 是無法被驅逐 - [詳細](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/#taints-and-tolerations)
 
 ## 容忍（tolerations）
 
